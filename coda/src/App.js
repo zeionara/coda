@@ -1,7 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
 
-// import Terminal from './components/terminal'
+import {Command} from './components/terminal'
 
 function Welcome(props) {
     return <h1>Hello, {props.name}</h1>
@@ -24,6 +24,14 @@ function App() {
           Learn React
         </a>
         <Welcome name="zeio"/>
+        <p>
+            <Command title="describe command features">
+                coda
+            </Command>
+            <Command name="describe" title="describe command features" color="blue">
+                describe
+            </Command>
+        </p>
       </header>
     </div>
   );
