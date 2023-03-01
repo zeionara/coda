@@ -1,6 +1,12 @@
 import logo from './logo.svg';
 import './App.css';
 
+// import Terminal from './components/terminal'
+
+function Welcome(props) {
+    return <h1>Hello, {props.name}</h1>
+}
+
 function App() {
   return (
     <div className="App">
@@ -17,6 +23,7 @@ function App() {
         >
           Learn React
         </a>
+        <Welcome name="zeio"/>
       </header>
     </div>
   );
