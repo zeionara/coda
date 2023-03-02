@@ -1,0 +1,36 @@
+$base_padding: 5
+$border_thickness: 2
+$border_radius: 2
+
+$command_padding_inactive: #{$base_padding}px #{$base_padding * 2}px
+$command_padding_active: #{$base_padding + $border_thickness}px #{$base_padding * 2 + $border_thickness}px
+$command_margin: 0 #{$base_padding}px
+
+@mixin theme($primary_color, $text_color: white)
+  color: $primary_color
+
+  &:hover
+    background: $primary_color
+    color: $text_color
+
+.command
+  padding: $command_padding_inactive
+  margin: $command_margin
+
+abbr.command
+  border: #{$border_thickness}px solid
+  border-radius: #{$border_radius}px
+  cursor: pointer
+
+  &:hover
+    padding: $command_padding_active
+    border: 0
+
+  &.blue
+    @include theme(#0074d9, hsla(208, 100%, 85%, 1.0))
+
+  &.red
+    @include theme(#ff4136, hsla(3, 100%, 25%, 1.0))
+
+  &.violet
+    @include theme(#6a5acd)

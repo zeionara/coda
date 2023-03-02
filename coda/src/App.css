@@ -36,31 +36,3 @@
     transform: rotate(360deg);
   }
 }
-
-.command {
-    padding: 5px;
-}
-
-abbr.command {
-    border: 2px solid;
-    border-radius: 2px;
-    cursor: pointer;
-}
-
-abbr.command.blue {
-    color: blue;
-}
-
-abbr.command:hover {
-    color: white;
-    padding: 7px;
-    border: 0;
-}
-
-abbr.command.blue:hover {
-    background: blue;
-}
-
-abbr.command.red {
-    color: red;
-}

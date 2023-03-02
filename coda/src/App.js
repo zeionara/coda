@@ -1,6 +1,8 @@
 import logo from './logo.svg';
 import './App.css';
 
+import './styles/command.sass';
+
 import {Command} from './components/terminal'
 
 function Welcome(props) {
@@ -30,6 +32,9 @@ function App() {
             </Command>
             <Command name="describe" title="describe command features" color="blue">
                 describe
+            </Command>
+            <Command name="foo" title="describe command features" color="red">
+                bar
             </Command>
         </p>
       </header>
