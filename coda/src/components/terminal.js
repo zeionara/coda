@@ -1,9 +1,8 @@
-import { Tooltip } from './tooltip'
 import React from 'react'
 
 import '../styles/command.sass';
 
-const Component = 'span';
+export const Component = 'span';
 const Root = 'p';
 
 export class Command extends React.Component {
@@ -18,6 +17,7 @@ export class Command extends React.Component {
 
     copy() {
         console.log(this.name)
+        this.children.forEach(item => console.log(item.props.states))
         navigator.clipboard.writeText(`${this.name} command`)
     }
 
@@ -32,27 +32,4 @@ export class Command extends React.Component {
             </Root>
         )
     }
-}
-
-// export const Command = ({ name, children }) => {
-//     return (
-//         <Root>
-//             <Component className='command'>{name}</Component>
-//             {children}
-//         </Root>
-//     )
-// }
-
-export const Argument = ({ name, description, theme }) => {
-    const tooltip = (
-        <>
-            <strong>{name}:</strong> {description}
-        </>
-    )
-
-    return (
-        <Tooltip content={tooltip}>
-            <Component className={`command argument ${theme}`}>{name}</Component>
-        </Tooltip>
-    )
 }
