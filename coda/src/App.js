@@ -27,15 +27,9 @@ function App() {
         </a>
         <Welcome name="zeio"/>
         <p>
-            <Command title="describe command features">
-                coda
-            </Command>
-            <Command name="describe" title="describe command features" color="blue">
-                describe
-            </Command>
-            <Command name="foo" title="describe command features" color="red">
-                bar
-            </Command>
+            <Command name="coda"/>
+            <Argument name="describe" description="describe command features" theme="blue"/>
+            <Argument name="bar" description="describe command features" theme="red"/>
             <Argument name="fox" description="describe command features" theme="red"/>
         </p>
       </header>
