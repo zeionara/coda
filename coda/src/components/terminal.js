@@ -1,5 +1,7 @@
 import { Tooltip } from './tooltip'
 
+import '../styles/command.sass';
+
 const Component = 'span';
 
 export const Command = ({ name }) => {

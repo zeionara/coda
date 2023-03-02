@@ -1,8 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
 
-import './styles/command.sass';
-
 import { Command, Argument } from './components/terminal'
 
 function Welcome(props) {

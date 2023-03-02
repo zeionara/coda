@@ -1,15 +1,11 @@
 import Tippy from '@tippyjs/react'
-import 'tippy.js/dist/tippy.css';
 
-export const Tooltip = ({ small = false, dark = false, className, children, ...props }) => {
+import 'tippy.js/dist/tippy.css'
+import '../styles/tooltip.sass'
+
+export const Tooltip = ({ children, content }) => {
     return (
-        <Tippy
-            // animateFill={false}
-            distance={small ? 5 : 15}
-            placement="top"
-            // className={tooltipClassNames}
-            {...props}
-        >
+        <Tippy placement='top' className='tooltip' content={content}>
             {children}
         </Tippy>
     )
