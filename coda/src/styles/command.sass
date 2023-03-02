@@ -17,20 +17,21 @@ $command_margin: 0 #{$base_padding}px
   padding: $command_padding_inactive
   margin: $command_margin
 
-abbr.command
-  border: #{$border_thickness}px solid
-  border-radius: #{$border_radius}px
-  cursor: pointer
+.command
+  &.argument, &.option, &.flag
+    border: #{$border_thickness}px solid
+    border-radius: #{$border_radius}px
+    cursor: pointer
 
-  &:hover
-    padding: $command_padding_active
-    border: 0
+    &:hover
+      padding: $command_padding_active
+      border: 0
 
-  &.blue
-    @include theme(#0074d9, hsla(208, 100%, 85%, 1.0))
+    &.blue
+      @include theme(#0074d9, hsla(208, 100%, 85%, 1.0))
 
-  &.red
-    @include theme(#ff4136, hsla(3, 100%, 25%, 1.0))
+    &.red
+      @include theme(#ff4136, hsla(3, 100%, 25%, 1.0))
 
-  &.violet
-    @include theme(#6a5acd)
+    &.violet
+      @include theme(#6a5acd)

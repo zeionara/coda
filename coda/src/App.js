@@ -3,7 +3,7 @@ import './App.css';
 
 import './styles/command.sass';
 
-import {Command} from './components/terminal'
+import { Command, Argument } from './components/terminal'
 
 function Welcome(props) {
     return <h1>Hello, {props.name}</h1>
@@ -36,6 +36,7 @@ function App() {
             <Command name="foo" title="describe command features" color="red">
                 bar
             </Command>
+            <Argument name="fox" description="describe command features" theme="red"/>
         </p>
       </header>
     </div>
