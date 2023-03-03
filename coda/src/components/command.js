@@ -9,18 +9,19 @@ export class Command extends React.Component {
     constructor(props) {
         super(props)
 
-        this.name = props.name
-        // this.children = props.children
+        // Bind instance methods
 
         this.copy = this.copy.bind(this)
         this.setPiece = this.setPiece.bind(this)
 
+        // Init state
+
         let pieces = Array(props.children.length + 1).fill(null)
         pieces[0] = props.name
 
-        console.log(pieces)
-
         this.pieces = pieces
+
+        // Update children
 
         let index = 1
 
@@ -33,28 +34,32 @@ export class Command extends React.Component {
                 }
             )
         )
-
-        // console.log(props.children)
-        // console.log(children)
-        // console.log(this.props)
     }
 
     setPiece(i, value) {
-        console.log(this.pieces)
         this.pieces[i] = value
     }
 
+    mergePieces() {
+        return this.pieces.filter(value => value).join(' ')
+        // let command = this.pieces[0]
+
+        // this.pieces.forEach(piece =>
+        //     if (piece !== null) {
+        //         command += ' ' + piece
+        //     }
+        // )
+    }
+
     copy() {
-        // console.log(this.name)
         console.log(this.pieces)
-        // this.children.forEach(item => console.log(item.props.states))
-        navigator.clipboard.writeText(`${this.name} command`)
+        navigator.clipboard.writeText(this.mergePieces())
     }
 
     render() {
         return (
             <Root>
-                <Component className='command'>{this.name}</Component>
+                <Component className='command'>{this.props.name}</Component>
                 {this.children}
                 <span onClick={this.copy} className='button'>
                     📋

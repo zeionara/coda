@@ -6,64 +6,87 @@ export class Argument extends React.Component {
     constructor(props) {
         super(props)
 
-        this.state = {foo: 'bar'}
-
-        this.name = props.name
-        this.description = props.description
-        this.value = props.value
-        this.theme = props.theme
-
-        // console.log(this.onlyonce)
-
-        this.id = undefined
-
-        // this.isEditable = false
-
         this.toggleIsEditable = this.toggleIsEditable.bind(this)
         this.updateValue = this.updateValue.bind(this)
+        this.handleKeyDown = this.handleKeyDown.bind(this)
+
         this.state = {
             isEditable: false,
             value: props.value
         }
+        this.input_id = `piece-input-${props.index}`
 
-        // console.log('ok')
+        this.inputElement = React.createRef()
+        
+        if (props.value !== undefined) {
+            this.liftValue(props.value)
+        }
+    }
+
+    componentDidUpdate() {
+        if (this.state.isEditable) {
+            this.inputElement.current.focus()
+        }
+    }
+
+    liftValue(value) {
+        this.props.setValue(this.props.index, value)
     }
 
     toggleIsEditable() {
-        // console.log(this.state)
-        this.setState({ isEditable: !this.state.isEditable, value: this.state.value })
-        // this.isEditable = !this.isEditable
-        // this.render()
+        let isEditable = this.state.isEditable
+
+        this.setState(
+            {
+                isEditable: !isEditable,
+                value: this.state.value
+            }
+        )
+
+        // if (!isEditable) {
+        //     console.log(this.inputElement)
+        //     setTimeout(() => this.inputElement.current.focus(), 100)
+        //     // console.log(result)
+        // }
     }
 
     updateValue(event) {
-        this.props.setValue(this.props.index, event.target.value)
-        this.setState({ isEditable: this.state.isEditable, value: event.target.value })
-        this.props.states[this.id].value = event.target.value
+        this.liftValue(event.target.value)
+        this.setState(
+            {
+                isEditable: this.state.isEditable,
+                value: event.target.value
+            }
+        )
+    }
+
+    handleKeyDown(event) {
+        if (event.key === 'Enter' || event.key === 'Escape') {
+            this.toggleIsEditable()
+        }
     }
 
     render() {
-        if (this.id === undefined) {
-            this.id = this.props.states.length
-            this.props.states.push(this.state)
-        }
-
         const tooltip = (
             <>
-                <strong>{this.name}:</strong> {this.description}
+                <strong>{this.props.name}:</strong> {this.props.description}
             </>
         )
 
         return (
             <Tooltip content={tooltip}>
-                <Component className={`command argument ${this.theme}`} onClick={this.toggleIsEditable}>
-                    <span className={this.state.isEditable ? 'hidden' : 'visible'}>{this.state.value === undefined ? this.name : this.state.value}</span>
-                    <input type='text' id='value' className={this.state.isEditable ? 'visible' : 'hidden'} onChange={this.updateValue}/>
+                <Component className={`command argument ${this.props.theme}`} onClick={this.toggleIsEditable}>
+                    <span className={this.state.isEditable ? 'hidden' : 'visible'}>{this.state.value === undefined ? this.props.name : this.state.value}</span>
+                    <input
+                        type='text'
+                        id={this.input_id}
+                        className={this.state.isEditable ? 'visible' : 'hidden'}
+                        onChange={this.updateValue}
+                        onKeyDown={this.handleKeyDown}
+                        ref={this.inputElement}
+                    />
                 </Component>
             </Tooltip>
         )
     }
 }
-
-// Argument.defaultProps = {'state': {'value': 'bar'}}
-Argument.defaultProps = {'states': []}
