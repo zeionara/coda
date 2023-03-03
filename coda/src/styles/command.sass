@@ -13,9 +13,20 @@ $command_margin: 0 #{$base_padding}px
     background: $primary_color
     color: $text_color
 
+  input[type=text]
+    color: inherit
+    background: inherit
+    font-size: inherit
+    margin: 0
+    padding: 0
+    outline: none
+    border: none
+    font-family: inherit
+
 .command
   padding: $command_padding_inactive
   margin: $command_margin
+  font-family: 'Inconsolata', monospace
 
 .command
   &.argument, &.option, &.flag

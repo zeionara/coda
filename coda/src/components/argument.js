@@ -10,9 +10,11 @@ export class Argument extends React.Component {
         this.updateValue = this.updateValue.bind(this)
         this.handleKeyDown = this.handleKeyDown.bind(this)
 
+        let initialInputValue = props.value ? props.value : ''
         this.state = {
             isEditable: false,
-            value: props.value
+            value: initialInputValue,
+            inputWidth: initialInputValue.length
         }
         this.input_id = `piece-input-${props.index}`
 
@@ -34,20 +36,13 @@ export class Argument extends React.Component {
     }
 
     toggleIsEditable() {
-        let isEditable = this.state.isEditable
-
         this.setState(
             {
-                isEditable: !isEditable,
-                value: this.state.value
+                isEditable: !this.state.isEditable,
+                value: this.state.value,
+                inputWidth: this.state.inputWidth
             }
         )
-
-        // if (!isEditable) {
-        //     console.log(this.inputElement)
-        //     setTimeout(() => this.inputElement.current.focus(), 100)
-        //     // console.log(result)
-        // }
     }
 
     updateValue(event) {
@@ -55,7 +50,8 @@ export class Argument extends React.Component {
         this.setState(
             {
                 isEditable: this.state.isEditable,
-                value: event.target.value
+                value: event.target.value,
+                inputWidth: event.target.value.length
             }
         )
     }
@@ -76,7 +72,7 @@ export class Argument extends React.Component {
         return (
             <Tooltip content={tooltip}>
                 <Component className={`command argument ${this.props.theme}`} onClick={this.toggleIsEditable}>
-                    <span className={this.state.isEditable ? 'hidden' : 'visible'}>{this.state.value === undefined ? this.props.name : this.state.value}</span>
+                    <span className={this.state.isEditable ? 'hidden' : 'visible'}>{this.state.value ? this.state.value : this.props.name}</span>
                     <input
                         type='text'
                         id={this.input_id}
@@ -84,6 +80,8 @@ export class Argument extends React.Component {
                         onChange={this.updateValue}
                         onKeyDown={this.handleKeyDown}
                         ref={this.inputElement}
+                        style={{width: this.state.inputWidth + 'ch'}}
+                        value={this.state.value}
                     />
                 </Component>
             </Tooltip>
