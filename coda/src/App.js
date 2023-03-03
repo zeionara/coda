@@ -1,9 +1,6 @@
-// import logo from './logo.svg';
-// import './App.css';
-
 import './styles/app.sass';
 
-import { Command } from './components/terminal'
+import { Command } from './components/command'
 import { Argument } from './components/argument'
 
 function App() {

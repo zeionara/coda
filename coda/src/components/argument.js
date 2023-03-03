@@ -1,6 +1,6 @@
 import React from 'react'
 import { Tooltip } from './tooltip'
-import { Component } from './terminal'
+import { Component } from './command'
 
 export class Argument extends React.Component {
     constructor(props) {
@@ -13,7 +13,7 @@ export class Argument extends React.Component {
         this.value = props.value
         this.theme = props.theme
 
-        console.log(this.onlyonce)
+        // console.log(this.onlyonce)
 
         this.id = undefined
 
@@ -26,7 +26,7 @@ export class Argument extends React.Component {
             value: props.value
         }
 
-        console.log('ok')
+        // console.log('ok')
     }
 
     toggleIsEditable() {
@@ -37,6 +37,7 @@ export class Argument extends React.Component {
     }
 
     updateValue(event) {
+        this.props.setValue(this.props.index, event.target.value)
         this.setState({ isEditable: this.state.isEditable, value: event.target.value })
         this.props.states[this.id].value = event.target.value
     }
