@@ -63,13 +63,19 @@ export abstract class Parameter<T extends Props, S extends State> extends React.
     abstract getState(): S
     abstract getCssClass(): string
 
+    getChildren(): JSX.Element | undefined {
+        return undefined
+    }
+
     componentDidUpdate() {
         if (this.state.isEditable) {
             this.inputElement.current!.focus()
         }
     }
 
-    abstract decorateValue(value: string): string
+    decorateValue(value: string) {
+        return value
+    }
 
     liftValue(value: string) {
         this.props.setValue!(this.props.index as number, this.decorateValue(value))
@@ -123,6 +129,7 @@ export abstract class Parameter<T extends Props, S extends State> extends React.
                         style={{width: this.state.inputWidth + 'ch'}}
                         value={this.state.value}
                     />
+                    {this.getChildren()}
                 </Component>
             </Tooltip>
         )

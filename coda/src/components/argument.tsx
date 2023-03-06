@@ -13,8 +13,10 @@ export class Argument extends Parameter<Props, State> {
         return new State(this.state)
     }
 
-    decorateValue(value: string) {
-        return value
+    getChildren() {
+        // return <span style={{position: 'absolute', fontSize: '1vh', right: 0, top: 0}}>🔒</span>
+        // return <span className={'mark'}>🎯</span>
+        return <span className={`mark ${this.state.isEditable ? 'hidden' : 'visible'}`}>argument</span>
     }
 }
 

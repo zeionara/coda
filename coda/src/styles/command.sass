@@ -33,6 +33,7 @@ $command_margin: 0 #{$base_padding}px
     border: #{$border_thickness}px solid
     border-radius: #{$border_radius}px
     cursor: pointer
+    position: relative
 
     &.optional
       border-style: dashed
@@ -59,3 +60,9 @@ $command_margin: 0 #{$base_padding}px
 .hidden
   visibility: hidden
   display: none
+
+.mark
+  position: absolute
+  font-size: 1vh
+  right: #{$border_thickness}px
+  top: 0

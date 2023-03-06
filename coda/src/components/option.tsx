@@ -40,4 +40,10 @@ export class Option extends Parameter<Props, State> {
     decorateValue(value: string) {
         return this.state.displayShortName && this.props.shortName ? `-${this.props.shortName} ${value}` : `--${this.props.name} ${value}`
     }
+
+    getChildren() {
+        // return <span style={{position: 'absolute', fontSize: '1vh', right: 0, top: 0}}>🔒</span>
+        // return <span className={'mark'}>🎯</span>
+        return <span className={`mark ${this.state.isEditable ? 'hidden' : 'visible'}`}>option</span>
+    }
 }
