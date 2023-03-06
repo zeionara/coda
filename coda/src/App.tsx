@@ -2,6 +2,7 @@ import './styles/app.sass';
 
 import { Command } from './components/command'
 import { Argument } from './components/argument'
+import { Option } from './components/option'
 
 function App() {
   return (
@@ -11,6 +12,7 @@ function App() {
             <Argument name="describe" description="describe command features" theme="blue" value="val"/>
             <Argument name="bar" description="describe command features" theme="red"/>
             <Argument name="fox" description="describe command features" theme="red" optional/>
+            <Option name="quux" description="describe command features" theme="violet" optional/>
         </Command>
     </div>
   );
