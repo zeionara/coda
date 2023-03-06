@@ -86,18 +86,39 @@ export class Command extends React.Component<Props> {
         let pieces = this.pieces
         let emptyParameters: string[] = []
 
+        let skippedOptionalArgumentsLocal: string[] = []
+        let skippedOptionalArgumentsGlobal: string[] = []
+
         this.children.forEach((parameter, i) => {
-                if (!parameter.props.optional && !pieces[i + 1]) {
+                let piece = pieces[i + 1]
+
+                if (!parameter.props.optional && !piece) {
                     emptyParameters.push(parameter.props.name)
+                }
+
+                if (parameter.type === Argument && parameter.props.optional) {
+                    if (!piece) {
+                        skippedOptionalArgumentsLocal.push(parameter.props.name)
+                    } else if (skippedOptionalArgumentsLocal.length > 0) {
+                        skippedOptionalArgumentsGlobal.push(...skippedOptionalArgumentsLocal)
+                        skippedOptionalArgumentsLocal = []
+                    }
                 }
             }
         )
 
         if (emptyParameters.length > 0) {
             alert(`The following required parameters are missing: ${emptyParameters.join(', ')}`)
+            return
         }
 
-        console.log(emptyParameters)
+        if (skippedOptionalArgumentsGlobal.length > 0) {
+            alert(
+                "The following optional arguments should be assigned a value because they are located " +
+                `between the optional arguments which are filled: ${skippedOptionalArgumentsGlobal.join(', ')}`
+            )
+            return
+        }
 
         navigator.clipboard.writeText(this.mergePieces())
     }
