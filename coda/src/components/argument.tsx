@@ -26,6 +26,8 @@ interface Props {
     name: string
     description: string
 
+    optional?: boolean
+
     value?: string
 
     theme: string
@@ -109,7 +111,7 @@ export class Argument extends React.Component<Props, State> {
 
         return (
             <Tooltip content={tooltip}>
-                <Component className={`command argument ${this.props.theme}`} onClick={this.toggleIsEditable}>
+                <Component className={`command argument ${this.props.theme} ${this.props.optional ? 'optional' : ''}`} onClick={this.toggleIsEditable}>
                     <span className={this.state.isEditable ? 'hidden' : 'visible'}>{this.state.value ? this.state.value : this.props.name}</span>
                     <input
                         type='text'

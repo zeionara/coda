@@ -2,6 +2,8 @@ import * as React from 'react'
 
 import '../styles/command.sass';
 
+import { Argument } from './argument'
+
 export const Component = 'span';
 const Root = 'p';
 
@@ -39,15 +41,27 @@ export class Command extends React.Component<Props> {
         // Update children
 
         let index = 1
+        let foundOptionalArgument = false
 
-        this.children = props.children.map(child =>
-            React.cloneElement(
-                child, {
-                    index: index,
-                    key: index++,  // each child should have a unique key
-                    setValue: this.setPiece,
+        this.children = props.children.map(child => {
+                if (child.type === Argument) {
+                    if (!foundOptionalArgument) {
+                         if (child.props.optional) {
+                            foundOptionalArgument = true
+                         }
+                    } else if (!child.props.optional) {
+                        throw new Error(`Found non trailing optional arguments`)
+                    }
                 }
-            )
+
+                return React.cloneElement(
+                    child, {
+                        index: index,
+                        key: index++,  // each child should have a unique key
+                        setValue: this.setPiece,
+                    }
+                )
+            }
         )
     }
 
@@ -68,6 +82,23 @@ export class Command extends React.Component<Props> {
 
     copy() {
         console.log(this.pieces)
+
+        let pieces = this.pieces
+        let emptyParameters: string[] = []
+
+        this.children.forEach((parameter, i) => {
+                if (!parameter.props.optional && !pieces[i + 1]) {
+                    emptyParameters.push(parameter.props.name)
+                }
+            }
+        )
+
+        if (emptyParameters.length > 0) {
+            alert(`The following required parameters are missing: ${emptyParameters.join(', ')}`)
+        }
+
+        console.log(emptyParameters)
+
         navigator.clipboard.writeText(this.mergePieces())
     }
 

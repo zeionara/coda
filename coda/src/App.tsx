@@ -10,7 +10,7 @@ function App() {
         <Command name="coda">
             <Argument name="describe" description="describe command features" theme="blue" value="val"/>
             <Argument name="bar" description="describe command features" theme="red"/>
-            <Argument name="fox" description="describe command features" theme="red"/>
+            <Argument name="fox" description="describe command features" theme="red" optional/>
         </Command>
     </div>
   );
