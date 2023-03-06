@@ -1,13 +1,28 @@
-import React from 'react'
+import * as React from 'react'
 
 import '../styles/command.sass';
 
 export const Component = 'span';
 const Root = 'p';
 
-export class Command extends React.Component {
-    constructor(props) {
+
+interface Props {
+    name: string
+
+    children: JSX.Element[]
+}
+
+
+export class Command extends React.Component<Props> {
+    pieces: [string | null]
+    children: JSX.Element[]
+
+    // props: Props
+
+    constructor(props: Props) {
         super(props)
+
+        // this.props = props
 
         // Bind instance methods
 
@@ -16,7 +31,7 @@ export class Command extends React.Component {
 
         // Init state
 
-        let pieces = Array(props.children.length + 1).fill(null)
+        let pieces = Array(props.children.length + 1).fill(null) as [string | null]
         pieces[0] = props.name
 
         this.pieces = pieces
@@ -36,7 +51,7 @@ export class Command extends React.Component {
         )
     }
 
-    setPiece(i, value) {
+    setPiece(i: number, value: string) {
         this.pieces[i] = value
     }
 
