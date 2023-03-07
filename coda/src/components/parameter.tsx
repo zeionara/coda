@@ -34,7 +34,7 @@ export interface Props {
 
     index?: number
 
-    setValue?(index: number, value: string): void
+    setValue?(index: number, value: string | null): void
 }
 
 export abstract class Parameter<T extends Props, S extends State> extends React.Component<T, S> {
@@ -78,7 +78,7 @@ export abstract class Parameter<T extends Props, S extends State> extends React.
     }
 
     liftValue(value: string) {
-        this.props.setValue!(this.props.index as number, this.decorateValue(value))
+        this.props.setValue!(this.props.index as number, value ? this.decorateValue(value) : null)
     }
 
     toggleIsEditable() {

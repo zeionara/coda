@@ -1,14 +1,12 @@
 @use './app'
 
-$base_padding: 5
-$border_thickness: 2
-$border_radius: 2
+$base_padding: 5  // px
+$border_thickness: 2  // px
+$border_radius: 2  // px
 
 $top_padding_multiplier: 1.5
 $flank_padding_multiplier: 2
 
-// $command_padding_inactive: #{$base_padding * $top_padding_multiplier}px #{$base_padding * $flank_padding_multiplier}px #{$base_padding}px #{$base_padding * $flank_padding_multiplier}px
-// $command_padding_active: #{$base_padding * 2 + $border_thickness}px #{$base_padding * 2 + $border_thickness}px #{$base_padding + $border_thickness}px #{$base_padding * 2 + $border_thickness}px
 $command_margin: 0 #{$base_padding}px
 
 @mixin theme($primary_color, $text_color: white)
