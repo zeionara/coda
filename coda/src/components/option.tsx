@@ -29,10 +29,6 @@ class State extends ParameterState {
 
 
 export class Option extends Parameter<Props, State> {
-    getCssClass() {
-        return 'option'
-    }
-
     getState() {
         return new State(this.state)
     }

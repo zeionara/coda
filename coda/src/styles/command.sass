@@ -64,6 +64,9 @@ $command_margin: 0 #{$base_padding}px
     &.violet
       @include theme(#6a5acd)
 
+  &.flag:has(> .disabled)
+    opacity: 0.33
+
 .button
   cursor: pointer
 

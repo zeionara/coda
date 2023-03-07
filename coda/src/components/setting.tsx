@@ -28,10 +28,12 @@ export abstract class Setting<T extends Props, S> extends React.Component<T, S> 
     }
 
     abstract getState(): S
-    abstract getCssClass(): string
-    abstract getTypeLabel(): string
 
-    abstract liftValue(value: string): void
+    getCssClass() {
+        return this.getTypeLabel()
+    }
+
+    abstract getTypeLabel(): string
 
     abstract handleClick(event: React.MouseEvent): void
     abstract getChildren(): JSX.Element

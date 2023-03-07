@@ -5,10 +5,6 @@
 import { State, Props, Parameter } from './parameter'
 
 export class Argument extends Parameter<Props, State> {
-    getCssClass() {
-        return 'argument'
-    }
-
     getState() {
         return new State(this.state)
     }
