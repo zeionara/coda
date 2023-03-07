@@ -4,6 +4,7 @@ import { Command } from './components/command'
 import { Argument } from './components/argument'
 import { Option } from './components/option'
 import { Flag } from './components/flag'
+import { Fragment } from './components/fragment'
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
             <Argument name="fox" description="describe command features" theme="red" optional/>
             <Option name="quux" description="describe command features" theme="violet" optional/>
             <Flag name="corge" description="my first flag" theme="blue" optional enabled/>
+            <Fragment name="grault" description="my first fragment" theme="blue" optional/>
         </Command>
     </div>
   );
