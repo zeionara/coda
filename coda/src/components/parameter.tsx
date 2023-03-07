@@ -1,7 +1,8 @@
 import * as React from 'react'
 
-import { Component } from './command'
-import { Tooltip } from './tooltip'
+// import { Component } from './command'
+// import { Tooltip } from './tooltip'
+import { Props as SettingProps, Setting } from './setting'
 
 export class State {
     isEditable: boolean = false
@@ -22,36 +23,24 @@ export class State {
     }
 }
 
-export interface Props {
-    name: string
-    description: string
-
-    theme: string
-
-    optional?: boolean
-
+export interface Props extends SettingProps {
     value?: string
-
-    index?: number
-
-    setValue?(index: number, value: string | null): void
 }
 
-export abstract class Parameter<T extends Props, S extends State> extends React.Component<T, S> {
+export abstract class Parameter<T extends Props, S extends State> extends Setting<T, S> {
     inputId: string
     inputElement: React.RefObject<HTMLInputElement>
 
     constructor(props: T) {
         super(props)
 
-        this.toggleIsEditable = this.toggleIsEditable.bind(this)
+        // this.toggleIsEditable = this.toggleIsEditable.bind(this)
         this.updateValue = this.updateValue.bind(this)
         this.handleKeyDown = this.handleKeyDown.bind(this)
         this.decorateValue = this.decorateValue.bind(this)
-        this.getCssClass = this.getCssClass.bind(this)
 
         this.state = {value: props.value ? props.value : ''} as S
-        this.inputId = `parameter-input-${props.index}`
+        this.inputId = `${this.getTypeLabel()}-input-${props.index}`
 
         this.inputElement = React.createRef()
         
@@ -59,11 +48,6 @@ export abstract class Parameter<T extends Props, S extends State> extends React.
             this.liftValue(props.value)
         }
     }
-
-    abstract getState(): S
-    abstract getCssClass(): string
-
-    abstract getTypeLabel(): string
 
     componentDidUpdate() {
         if (this.state.isEditable) {
@@ -106,30 +90,24 @@ export abstract class Parameter<T extends Props, S extends State> extends React.
         }
     }
 
-    render() {
-        const tooltip = (
-            <>
-                <strong>{this.props.name}:</strong> {this.props.description}
-            </>
-        )
+    handleClick(event: React.MouseEvent) {
+        this.toggleIsEditable()
+    }
 
-        return (
-            <Tooltip content={tooltip}>
-                <Component className={`command ${this.getCssClass()} ${this.props.theme} ${this.props.optional ? 'optional' : ''}`} onClick={this.toggleIsEditable}>
-                    <span className={this.state.isEditable ? 'hidden' : 'visible'}>{this.state.value ? this.decorateValue(this.state.value) : this.props.name}</span>
-                    <input
-                        type='text'
-                        id={this.inputId}
-                        className={this.state.isEditable ? 'visible' : 'hidden'}
-                        onChange={this.updateValue}
-                        onKeyDown={this.handleKeyDown}
-                        ref={this.inputElement}
-                        style={{width: this.state.inputWidth + 'ch'}}
-                        value={this.state.value}
-                    />
-                    <span className={`mark ${this.state.isEditable ? 'hidden' : 'visible'}`}>{this.getTypeLabel()}</span>
-                </Component>
-            </Tooltip>
-        )
+    getChildren() {
+        return <>
+            <span className={this.state.isEditable ? 'hidden' : 'visible'}>{this.state.value ? this.decorateValue(this.state.value) : this.props.name}</span>
+            <input
+                type='text'
+                id={this.inputId}
+                className={this.state.isEditable ? 'visible' : 'hidden'}
+                onChange={this.updateValue}
+                onKeyDown={this.handleKeyDown}
+                ref={this.inputElement}
+                style={{width: this.state.inputWidth + 'ch'}}
+                value={this.state.value}
+            />
+            <span className={`mark ${this.state.isEditable ? 'hidden' : 'visible'}`}>{this.getTypeLabel()}</span>
+        </>
     }
 }
