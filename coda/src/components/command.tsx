@@ -3,6 +3,7 @@ import * as React from 'react'
 import '../styles/command.sass';
 
 import { Argument } from './argument'
+import { Header } from './header'
 
 export const Component = 'span';
 const Root = 'p';
@@ -33,17 +34,18 @@ export class Command extends React.Component<Props> {
 
         // Init state
 
-        let pieces = Array(props.children.length + 1).fill(null) as [string | null]
-        pieces[0] = props.name
+        // let pieces = Array(props.children.length + 1).fill(null) as [string | null]
+        let pieces = Array(props.children.length).fill(null) as [string | null]
+        // pieces[0] = props.name
 
         this.pieces = pieces
 
         // Update children
 
-        let index = 1
+        let index = 0
         let foundOptionalArgument = false
 
-        this.children = props.children.map(child => {
+        this.children = [<Header name={this.props.name}/>, ...props.children].map(child => {
                 if (child.type === Argument) {
                     if (!foundOptionalArgument) {
                          if (child.props.optional) {
@@ -90,7 +92,7 @@ export class Command extends React.Component<Props> {
         let skippedOptionalArgumentsGlobal: string[] = []
 
         this.children.forEach((parameter, i) => {
-                let piece = pieces[i + 1]
+                let piece = pieces[i]
 
                 if (!parameter.props.optional && !piece) {
                     emptyParameters.push(parameter.props.name)
@@ -126,7 +128,6 @@ export class Command extends React.Component<Props> {
     render() {
         return (
             <Root>
-                <Component className='command'>{this.props.name}</Component>
                 {this.children}
                 <span onClick={this.copy} className='button'>
                     📋

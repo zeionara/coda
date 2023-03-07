@@ -5,6 +5,8 @@ import { Argument } from './components/argument'
 import { Option } from './components/option'
 import { Flag } from './components/flag'
 import { Fragment } from './components/fragment'
+import { Operator, OperatorValue } from './components/operator'
+import { Header } from './components/header'
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
             <Option name="quux" description="describe command features" theme="violet" optional/>
             <Flag name="corge" description="my first flag" theme="blue" optional enabled/>
             <Fragment name="grault" description="my first fragment" theme="blue" optional/>
+            <Operator value={OperatorValue.Pipe} theme="blue"/>
+            <Header name="bash"/>
         </Command>
     </div>
   );

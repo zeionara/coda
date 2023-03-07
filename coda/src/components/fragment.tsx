@@ -1,4 +1,5 @@
 import { Setting, Props } from './setting'
+import { Component } from './command'
 
 export class Fragment extends Setting<Props, {}> {
 
@@ -21,7 +22,7 @@ export class Fragment extends Setting<Props, {}> {
     getChildren() {
         return <>
             {this.props.name}
-            <span className={`mark visible`}>{this.getTypeLabel()}</span>
+            <Component className={`mark visible`}>{this.getTypeLabel()}</Component>
         </>
     }
 }

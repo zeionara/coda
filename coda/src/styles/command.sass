@@ -37,16 +37,18 @@ $command_margin: 0 #{$base_padding}px
   font-family: 'Inconsolata', monospace
 
 .command
-  &.argument, &.option, &.flag, &.fragment
-    border: #{$border_thickness}px solid
-    border-radius: #{$border_radius}px
+  &.argument, &.option, &.flag, &.fragment, &.operator
+    &:not(.operator)
+      border: #{$border_thickness}px solid
+      border-radius: #{$border_radius}px
+
     cursor: pointer
     position: relative
 
     &.optional:not(.fragment)
       border-style: dashed
 
-    &:hover
+    &:hover:not(.operator)
       padding-top: #{$base_padding * $top_padding_multiplier + $border_thickness}px
       padding-bottom: #{$base_padding + $border_thickness}px
 
