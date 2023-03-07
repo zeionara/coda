@@ -1,9 +1,14 @@
+@use './app'
+
 $base_padding: 5
 $border_thickness: 2
 $border_radius: 2
 
-$command_padding_inactive: #{$base_padding}px #{$base_padding * 2}px
-$command_padding_active: #{$base_padding + $border_thickness}px #{$base_padding * 2 + $border_thickness}px
+$top_padding_multiplier: 1.5
+$flank_padding_multiplier: 2
+
+// $command_padding_inactive: #{$base_padding * $top_padding_multiplier}px #{$base_padding * $flank_padding_multiplier}px #{$base_padding}px #{$base_padding * $flank_padding_multiplier}px
+// $command_padding_active: #{$base_padding * 2 + $border_thickness}px #{$base_padding * 2 + $border_thickness}px #{$base_padding + $border_thickness}px #{$base_padding * 2 + $border_thickness}px
 $command_margin: 0 #{$base_padding}px
 
 @mixin theme($primary_color, $text_color: white)
@@ -24,7 +29,12 @@ $command_margin: 0 #{$base_padding}px
     font-family: inherit
 
 .command
-  padding: $command_padding_inactive
+  padding-top: #{$base_padding * $top_padding_multiplier}px
+  padding-bottom: #{$base_padding}px
+
+  padding-right: #{$base_padding * $flank_padding_multiplier}px
+  padding-left: #{$base_padding * $flank_padding_multiplier}px
+
   margin: $command_margin
   font-family: 'Inconsolata', monospace
 
@@ -39,7 +49,12 @@ $command_margin: 0 #{$base_padding}px
       border-style: dashed
 
     &:hover
-      padding: $command_padding_active
+      padding-top: #{$base_padding * $top_padding_multiplier + $border_thickness}px
+      padding-bottom: #{$base_padding + $border_thickness}px
+
+      padding-right: #{$base_padding * $flank_padding_multiplier + $border_thickness}px
+      padding-left: #{$base_padding * $flank_padding_multiplier + $border_thickness}px
+
       border: 0
 
     &.blue
@@ -63,6 +78,6 @@ $command_margin: 0 #{$base_padding}px
 
 .mark
   position: absolute
-  font-size: 1vh
+  font-size: #{app.$base_font_size}vh
   right: #{$border_thickness}px
   top: 0
