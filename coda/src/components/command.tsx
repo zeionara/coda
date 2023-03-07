@@ -4,6 +4,8 @@ import '../styles/command.sass';
 
 import { Argument } from './argument'
 import { Header } from './header'
+import { Flag } from './flag'
+import { Option } from './option'
 
 export const Component = 'span';
 const Root = 'p';
@@ -16,9 +18,15 @@ interface Props {
 }
 
 
-export class Command extends React.Component<Props> {
+interface State {
+    enabled: boolean
+}
+
+
+export class Command extends React.Component<Props, State> {
     pieces: [string | null]
     children: JSX.Element[]
+    refs_: React.RefObject<React.Component>[]
 
     // props: Props
 
@@ -29,8 +37,10 @@ export class Command extends React.Component<Props> {
 
         // Bind instance methods
 
+        this.state = {enabled: false}
         this.copy = this.copy.bind(this)
         this.setPiece = this.setPiece.bind(this)
+        this.toggleDisplayShortName = this.toggleDisplayShortName.bind(this)
 
         // Init state
 
@@ -44,6 +54,7 @@ export class Command extends React.Component<Props> {
 
         let index = 0
         let foundOptionalArgument = false
+        let refs: React.RefObject<React.Component>[] = []
 
         this.children = [<Header name={this.props.name}/>, ...props.children].map(child => {
                 if (child.type === Argument) {
@@ -56,15 +67,37 @@ export class Command extends React.Component<Props> {
                     }
                 }
 
+                // let props = {
+                //     ...{
+                //         index: index,
+                //         key: index++,  // each child should have a unique key
+                //         setValue: this.setPiece,
+                //     },
+                //     ...(
+                //         child.type === Flag ? {displayShortName: this.state.enabled} : {}
+                //     )
+                // }
+
+                // return React.cloneElement(
+                //     child, props
+                // )
+
+                let ref: React.RefObject<React.Component> = React.createRef()
+                refs.push(ref)
+
                 return React.cloneElement(
                     child, {
                         index: index,
                         key: index++,  // each child should have a unique key
                         setValue: this.setPiece,
+                        ref: ref
                     }
                 )
             }
         )
+        this.refs_ = refs
+
+        // console.log(refs)
     }
 
     setPiece(i: number, value: string) {
@@ -125,6 +158,22 @@ export class Command extends React.Component<Props> {
         navigator.clipboard.writeText(this.mergePieces())
     }
 
+    toggleDisplayShortName(event: React.ChangeEvent<HTMLInputElement>) {
+        this.setState({enabled: !this.state.enabled})
+        const enable = event.target.checked
+
+        this.children.forEach((child, i) => {
+            if (child.type === Flag) {
+                // console.log(child.props)
+                (this.refs_[i].current as Flag).setDisplayShortName(enable)
+                // child.props.displayShortName = enable
+            }
+            if (child.type === Option) {
+                (this.refs_[i].current as Option).setDisplayShortName(enable)
+            }
+        })
+    }
+
     render() {
         return (
             <Root>
@@ -132,6 +181,8 @@ export class Command extends React.Component<Props> {
                 <span onClick={this.copy} className='button'>
                     📋
                 </span>
+                <input type="checkbox" id="display-short-name-checkbox" name="display short name" onChange={this.toggleDisplayShortName}/>
+                <label htmlFor="display-short-name-checkbox">Short</label>
             </Root>
         )
     }

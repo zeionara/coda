@@ -16,8 +16,8 @@ function App() {
             <Argument name="describe" description="describe command features" theme="blue" value="val"/>
             <Argument name="bar" description="describe command features" theme="red" optional/>
             <Argument name="fox" description="describe command features" theme="red" optional/>
-            <Option name="quux" description="describe command features" theme="violet" optional/>
-            <Flag name="corge" description="my first flag" theme="blue" optional enabled/>
+            <Option name="quux" shortName="q" description="describe command features" theme="violet" optional/>
+            <Flag name="corge" shortName="c" description="my first flag" theme="blue" optional enabled/>
             <Fragment name="grault" description="my first fragment" theme="blue" optional/>
             <Operator value={OperatorValue.Pipe} theme="blue"/>
             <Header name="bash"/>

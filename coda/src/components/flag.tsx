@@ -3,17 +3,18 @@ import { Props as SettingProps, Setting } from './setting'
 interface Props extends SettingProps {
     enabled?: boolean
     shortName?: string
-    displayShortName?: boolean
 }
 
 class State {
     isEnabled: boolean
+    displayShortName: boolean
 
-    constructor({isEnabled = false}: {isEnabled?: boolean}) {
+    constructor({isEnabled = false, displayShortName = false}: {isEnabled?: boolean, displayShortName?: boolean}) {
         this.isEnabled = isEnabled
+        this.displayShortName = displayShortName
     }
 
-    clone(params: {isEnabled?: boolean}) {
+    clone(params: {isEnabled?: boolean, displayShortName?: boolean}) {
         return new State({...this, ...params})
     }
 }
@@ -24,8 +25,9 @@ export class Flag extends Setting<Props, State> {
 
         let {enabled = false} = props
 
-        this.state = new State({isEnabled: enabled})
-        this.liftValue(enabled)
+        const state = new State({isEnabled: enabled})
+        this.state = state
+        this.liftValue(state)
     }
 
     getState() {
@@ -36,32 +38,40 @@ export class Flag extends Setting<Props, State> {
         return 'flag'
     }
 
-    decorateName() {
-        return this.props.displayShortName && this.props.shortName ? `-${this.props.shortName}` : `--${this.props.name}`
+    decorateName(state: State) {
+        return state.displayShortName && this.props.shortName ? `-${this.props.shortName}` : `--${this.props.name}`
     }
 
-    liftValue(isEnabled: boolean) {
+    liftValue(state: State) {
         this.props.setValue!(
             this.props.index!,
-            isEnabled ? this.decorateName() : null
+            state.isEnabled ? this.decorateName(state) : null
         )
     }
 
     handleClick(event: React.MouseEvent) {
-        let isEnabled = !this.state.isEnabled
-        this.setState(
-            this.getState().clone(
-                {
-                    isEnabled: isEnabled
-                }
-            )
+        const state = this.getState().clone(
+            {
+                isEnabled: !this.state.isEnabled
+            }
         )
-        this.liftValue(isEnabled)
+        this.setState(state)
+        this.liftValue(state)
+    }
+
+    setDisplayShortName(value: boolean) {
+        const state = this.getState().clone(
+            {
+                displayShortName: value
+            }
+        )
+        this.setState(state)
+        this.liftValue(state)
     }
 
     getChildren() {
         return <>
-            <span className={this.state.isEnabled ? '' : 'disabled'}>{this.decorateName()}</span>
+            <span className={this.state.isEnabled ? '' : 'disabled'}>{this.decorateName(this.state)}</span>
             <span className={`mark visible`}>{this.getTypeLabel()}</span>
         </>
     }

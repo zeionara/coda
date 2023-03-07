@@ -39,13 +39,14 @@ export abstract class Parameter<T extends Props, S extends State> extends Settin
         this.handleKeyDown = this.handleKeyDown.bind(this)
         this.decorateValue = this.decorateValue.bind(this)
 
-        this.state = {value: props.value ? props.value : ''} as S
+        const state = {value: props.value ? props.value : ''} as S
+        this.state = state
         this.inputId = `${this.getTypeLabel()}-input-${props.index}`
 
         this.inputElement = React.createRef()
         
         if (props.value !== undefined) {
-            this.liftValue(props.value)
+            this.liftValue(state)
         }
     }
 
@@ -55,15 +56,15 @@ export abstract class Parameter<T extends Props, S extends State> extends Settin
         }
     }
 
-    decorateValue(value: string) {
-        if (value.indexOf(' ') >= 0) {
-            return `'${value}'`
+    decorateValue(state: State) {
+        if (state.value.indexOf(' ') >= 0) {
+            return `'${state.value}'`
         }
-        return value
+        return state.value
     }
 
-    liftValue(value: string) {
-        this.props.setValue!(this.props.index as number, value ? this.decorateValue(value) : null)
+    liftValue(state: State) {
+        this.props.setValue!(this.props.index as number, state.value ? this.decorateValue(state) : null)
     }
 
     toggleIsEditable() {
@@ -77,14 +78,13 @@ export abstract class Parameter<T extends Props, S extends State> extends Settin
     }
 
     updateValue(event: React.ChangeEvent<HTMLInputElement>) {
-        this.liftValue(event.target.value)
-        this.setState(
-            this.getState().clone(
-                {
-                    value: event.target.value
-                }
-            )
+        const state = this.getState().clone(
+            {
+                value: event.target.value
+            }
         )
+        this.setState(state)
+        this.liftValue(state)
     }
 
     handleKeyDown(event: React.KeyboardEvent) {
@@ -99,7 +99,7 @@ export abstract class Parameter<T extends Props, S extends State> extends Settin
 
     getChildren() {
         return <>
-            <span className={this.state.isEditable ? 'hidden' : 'visible'}>{this.state.value ? this.decorateValue(this.state.value) : this.props.name}</span>
+            <span className={this.state.isEditable ? 'hidden' : 'visible'}>{this.state.value ? this.decorateValue(this.state) : this.props.name}</span>
             <input
                 type='text'
                 id={this.inputId}

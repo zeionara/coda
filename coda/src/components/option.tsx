@@ -30,9 +30,19 @@ export class Option extends Parameter<Props, State> {
         return new State(this.state)
     }
 
-    decorateValue(value: string) {
-        value = Parameter.prototype.decorateValue(value)
-        return this.state.displayShortName && this.props.shortName ? `-${this.props.shortName} ${value}` : `--${this.props.name} ${value}`
+    setDisplayShortName(value: boolean) {
+        const state = this.getState().clone(
+            {
+                displayShortName: value
+            }
+        )
+        this.setState(state)
+        this.liftValue(state)
+    }
+
+    decorateValue(state: State) {
+        const value = Parameter.prototype.decorateValue(state)
+        return state.displayShortName && this.props.shortName ? `-${this.props.shortName} ${value}` : `--${this.props.name} ${value}`
     }
 
     getTypeLabel() {
