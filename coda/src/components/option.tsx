@@ -20,10 +20,7 @@ class State extends ParameterState {
     }
 
     clone(params: {isEditable?: boolean, value?: string, inputWidth?: number, displayShortName?: boolean}) {
-        // console.log('Cloning state...')
-        let cloned = new State({...this, ...{inputWidth: undefined}, ...params})
-        // console.log(cloned)
-        return cloned
+        return new State({...this, ...{inputWidth: undefined}, ...params})
     }
 }
 
@@ -34,6 +31,7 @@ export class Option extends Parameter<Props, State> {
     }
 
     decorateValue(value: string) {
+        value = Parameter.prototype.decorateValue(value)
         return this.state.displayShortName && this.props.shortName ? `-${this.props.shortName} ${value}` : `--${this.props.name} ${value}`
     }
 

@@ -56,6 +56,9 @@ export abstract class Parameter<T extends Props, S extends State> extends Settin
     }
 
     decorateValue(value: string) {
+        if (value.indexOf(' ') >= 0) {
+            return `'${value}'`
+        }
         return value
     }
 
