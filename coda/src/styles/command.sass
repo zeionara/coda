@@ -36,6 +36,8 @@ $command_margin: 0 #{$base_padding}px
   margin: $command_margin
   font-family: 'Inconsolata', monospace
 
+  @include app.text_config()
+
 .command
   &.argument, &.option, &.flag, &.fragment, &.operator
     &:not(.operator)

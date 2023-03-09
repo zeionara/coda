@@ -1,3 +1,6 @@
+import './styles/index.sass';
+import './styles/app.sass';
+
 // import * as React from 'react';
 // import { createRoot } from 'react-dom/client';
 // import './styles/index.sass';
@@ -20,8 +23,5 @@
 // // to log results (for example: reportWebVitals(console.log))
 // // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
 // // reportWebVitals();
-
-import './styles/index.sass';
-import './styles/app.sass';
 
 export * from './components'

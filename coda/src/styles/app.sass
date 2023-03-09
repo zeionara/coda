@@ -2,8 +2,11 @@ $base_font_size: 1  // vh
 
 $main_font_size: $base_font_size * 3
 
-.app
+@mixin text_config()
   text-align: center
   align-items: center
   justify-content: center
   font-size: #{$main_font_size}vh
+
+.app
+  @include text_config()

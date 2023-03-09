@@ -1,28 +1,25 @@
 {
-  "name": "@zeionara/coda",
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/zeionara"
-  },
-  "version": "0.6.0",
-  "private": false,
+  "name": "examples",
+  "version": "0.1.0",
+  "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
     "@testing-library/user-event": "^13.5.0",
-    "@tippyjs/react": "^4.2.6",
-    "@types/jest": "^29.4.0",
-    "@types/node": "^18.14.6",
+    "@types/jest": "^27.5.2",
+    "@types/node": "^16.18.14",
     "@types/react": "^18.0.28",
     "@types/react-dom": "^18.0.11",
+    "@zeionara/coda": "^0.6.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-scripts": "5.0.1",
-    "sass": "^1.58.3",
+    "typescript": "^4.9.5",
     "web-vitals": "^2.1.4"
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "tsc",
+    "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -43,17 +40,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {
-    "typescript": "^4.9.5"
-  },
-  "peerDependencies": {
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0"
-  },
-  "files": [
-    "/build"
-  ],
-  "main": "build/index.js",
-  "types": "build/index.d.ts"
+  }
 }
